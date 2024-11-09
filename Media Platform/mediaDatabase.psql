@@ -10,10 +10,8 @@ CREATE TABLE Post (
     Title VARCHAR(300), 
     "Date" DATE NOT NULL,
     Place VARCHAR(30),
-    PostType VARCHAR(15) NOT NULL,
 
     CHECK (PostID >= 0),
-    CHECK(PostType = 'ImagePost' OR PostType = 'VideoPost' OR PostType = 'TextPost'),
     FOREIGN KEY (UserID) REFERENCES "User"(UserID)
 );
 

@@ -13,10 +13,10 @@ INSERT INTO Friends (UserID1, UserID2) VALUES
     (4,6); -- Krystian and Meron are friends
 
 
-INSERT INTO Post (PostID, UserID, Title, "Date", Place, PostType) VALUES 
-    (1, 2, 'My beautiful cat', '2024-11-01', 'Östermalm', 'VideoPost'), -- VideoPost
-    (2, 1, 'Victors Catblog', '2024-11-05', 'Stenhamra', 'TextPost'), -- VideoPost
-    (3, 3, 'School and my cat drives me crazy', '2020-11-07', 'Odenplan', 'ImagePost');
+INSERT INTO Post (PostID, UserID, Title, "Date", Place) VALUES 
+    (1, 2, 'My beautiful cat', '2024-11-01', 'Östermalm'), -- VideoPost
+    (2, 1, 'Victors Catblog', '2024-11-05', 'Stenhamra'), -- VideoPost
+    (3, 3, 'School and my cat drives me crazy', '2020-11-07', 'Odenplan');
 
 
 INSERT INTO VideoPost (PostID, VideoURL, Codec) VALUES
