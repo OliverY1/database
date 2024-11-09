@@ -25,9 +25,9 @@ This is a social media platform designed for university students. It allows stud
 
 ## Database Structure
 
-- **Users:** Stores user data (name, email, password, etc.).
+- **Users:** Stores user data (name, UserID etc.).
 - **Posts:** Stores content created by users, including text, images, and videos.
 - **Events:** Stores event details, including date, location, and user attendance.
-- **Friendships:** Stores the relationships between users (friend requests, accepted friends).
-- **Subscriptions:** Tracks user subscriptions and access to premium features.
+- **Friendships:** Stores the relationships between users.
+- **Subscriptions:** Tracks user subscriptions and access.
 - **Likes:** Stores the likes for posts. Each entry links a user to a post that they liked.
