@@ -1,6 +1,3 @@
---DROP TABLE IF EXISTS Post, ImagePost, TextPost, VideoPost, "Like", "User", Event, Attendee, Subscription;
-
--- GRANT ALL PRIVILEGES ON TABLE Post, ImagePost, TextPost, VideoPost, "Like", ""User"", Event, Attendee, Subscription TO olivery;
 
 CREATE TABLE "User" (
     UserID INT PRIMARY KEY,
