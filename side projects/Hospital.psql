@@ -1,0 +1,45 @@
+CREATE TABLE Department (
+    DepartmentName VARCHAR(50) PRIMARY KEY,
+    BuildingNr INT NOT NULL
+);
+
+CREATE TABLE Employee (
+    ID INT PRIMARY KEY,
+    PhoneNr INT,
+    "Name" VARCHAR(50) NOT NULL,
+    DepartmentName VARCHAR(50), -- new attribute to reference department
+    MentorID INT,
+    StartDate DATE NOT NULL,
+    FOREIGN KEY(DepartmentName) REFERENCES Department(DepartmentName),
+    FOREIGN KEY(MentorID) REFERENCES Employee(ID)
+);
+
+CREATE TABLE Doctor (
+    ID INT PRIMARY KEY,
+    Specialization VARCHAR(50) NOT NULL,
+    RoomNr INT NOT NULL,
+
+    FOREIGN KEY(ID) REFERENCES Employee(ID)
+);
+
+CREATE TABLE Patient (
+    ID INT PRIMARY KEY,
+    Age INT NOT NULL,
+    "Name" VARCHAR(50) NOT NULL, 
+    Diagnosises VARCHAR(100)
+);
+
+CREATE TABLE Treat(
+    DoctorID INT,
+    PatientID INT,
+    PRIMARY KEY(DoctorID, PatientID),
+    FOREIGN KEY(DoctorID) REFERENCES Doctor(ID),
+    FOREIGN KEY(PatientID) REFERENCES Patient(ID)
+
+);
+
+CREATE TABLE Nurse (
+    ID INT PRIMARY KEY,
+    Degree VARCHAR(100),
+    FOREIGN KEY(ID) REFERENCES Employee(ID)
+);
