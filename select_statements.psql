@@ -1,0 +1,10 @@
+SELECT FullName FROM "User";
+
+SELECT * FROM Friends;
+
+SELECT * FROM TextPost;
+SELECT * FROM VideoPost;
+SELECT * FROM ImagePost;
+
+SELECT * FROM Event;
+SELECT * FROM Subscription;

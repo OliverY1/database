@@ -1,0 +1,113 @@
+--DROP TABLE IF EXISTS Post, ImagePost, TextPost, VideoPost, "Like", "User", Event, Attendee, Subscription;
+
+-- GRANT ALL PRIVILEGES ON TABLE Post, ImagePost, TextPost, VideoPost, "Like", ""User"", Event, Attendee, Subscription TO olivery;
+
+CREATE TABLE "User" (
+    UserID INT PRIMARY KEY,
+    FullName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Post (
+    PostID INT PRIMARY KEY,
+    UserID INT,
+    Title VARCHAR(300), 
+    "Date" DATE NOT NULL,
+    Place VARCHAR(30),
+    PostType VARCHAR(15) NOT NULL,
+
+    CHECK (PostID >= 0),
+    CHECK(PostType = 'ImagePost' OR PostType = 'VideoPost' OR PostType = 'TextPost'),
+    FOREIGN KEY (UserID) REFERENCES "User"(UserID)
+);
+
+
+CREATE TABLE Tags (
+    PostID INT,
+    TagName VARCHAR(30),
+    PRIMARY KEY(PostID, TagName),
+    FOREIGN KEY(PostID) REFERENCES Post(PostID),
+
+    CHECK(TagName = 'crypto' OR TagName = 'studying' OR TagName = 'question' OR TagName = 'social')
+);
+
+CREATE TABLE Friends (
+    UserID1 INT,
+    UserID2 INT,
+    CHECK(UserID1 < UserID2), -- Tuple based constraint
+    PRIMARY KEY(UserID1, UserID2),
+    FOREIGN KEY (UserID1) REFERENCES "User"(UserID),
+    FOREIGN KEY (UserID2) REFERENCES "User"(UserID)
+
+    -- when inserting, UserID2 must be greater than UserID1 to ensure symmetric relationship and no repetition
+);
+
+CREATE TABLE ImagePost (
+    PostID INT PRIMARY KEY,
+    ImageURL VARCHAR(50) NOT NULL,
+    "Filter" VARCHAR(50),
+
+    CHECK("Filter" = 'Black' OR "Filter" = 'White'),
+    FOREIGN KEY(PostID) REFERENCES Post(PostID)
+); 
+
+CREATE TABLE TextPost (
+    PostID INT PRIMARY KEY,
+    TextContent TEXT,
+
+    FOREIGN KEY(PostID) REFERENCES Post(PostID)
+);
+
+CREATE TABLE VideoPost (
+    PostID INT PRIMARY KEY,
+    VideoURL VARCHAR(30) NOT NULL,
+    Codec VARCHAR(10) NOT NULL,
+
+    FOREIGN KEY(PostID) REFERENCES Post(PostID)
+);
+
+CREATE TABLE "Like"(
+    PostID INT,
+    UserID INT,
+    "TimeStamp" TIMESTAMP NOT NULL,
+
+    PRIMARY KEY(PostID, UserID),
+
+    FOREIGN KEY (PostID) REFERENCES Post(PostID),
+    FOREIGN KEY (UserID) REFERENCES "User"(UserID)
+);
+
+CREATE TABLE Event (
+    EventID INT PRIMARY KEY,
+    UserID INT,
+    Title VARCHAR(50),
+    Place VARCHAR(50),
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    Duration INT NOT NULL,
+
+    CHECK(StartDate <= EndDate),
+
+    FOREIGN KEY (UserID) REFERENCES "User"(UserID)
+);
+
+CREATE TABLE Attendee (
+    UserID INT,
+    EventID INT,
+
+    PRIMARY KEY(UserID, EventID),
+
+    FOREIGN KEY (UserID) REFERENCES "User"(UserID),
+    FOREIGN KEY (EventID) REFERENCES Event(EventID)
+);
+
+CREATE TABLE Subscription (
+    SubscriptionID INT PRIMARY KEY,
+    UserID INT,
+    DateOfPayment DATE NOT NULL,
+    PaymentMethod VARCHAR(50) NOT NULL,
+
+    ExpiryDate DATE CHECK (ExpiryDate = DateOfPayment + INTERVAL '1 month'),
+
+    CHECK(PaymentMethod = 'Klarna' OR PaymentMethod = 'Swish' OR PaymentMethod = 'Card' OR PaymentMethod = 'Bitcoin'),
+    FOREIGN KEY (UserID) REFERENCES "User"(UserID)
+);
